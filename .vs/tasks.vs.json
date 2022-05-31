@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "zadanie-cwiczenia6_mp-s20226",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}
