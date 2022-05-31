@@ -1,3 +1,5 @@
+using CW8.Models;
+using CW8.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +21,7 @@ namespace CW8
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<MainDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultDbConnection")));
             services.AddScoped<IDbService, DbService>();
             services.AddControllers();
         }
