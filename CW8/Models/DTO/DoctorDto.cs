@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CW8.Models.DTO
+﻿namespace CW8.Models.DTO
 {
     public class DoctorDto
     {
@@ -11,6 +6,6 @@ namespace CW8.Models.DTO
         public string LastName { get; set; }
         public string Email { get; set; }
 
-    //    public IEnumerable<PrescriptionDto> Prescriptions { get; set; }
+        //    public IEnumerable<PrescriptionDto> Prescriptions { get; set; }
     }
 }

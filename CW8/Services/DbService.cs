@@ -20,18 +20,23 @@ namespace CW8.Services
         {
             await _dbContext.AddAsync(new Doctor
             {
-               FirstName=doctor.FirstName,
-               LastName=doctor.LastName,
-               Email=doctor.Email,
-           //    IdDoctor = await _dbContext.Doctors.MaxAsync(e => e.IdDoctor)+1
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                Email = doctor.Email,
+                //    IdDoctor = await _dbContext.Doctors.MaxAsync(e => e.IdDoctor)+1
 
             });
-           await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<bool> CheckDoctorId(int idDoctor)
         {
             return await _dbContext.Doctors.AnyAsync(e => e.IdDoctor == idDoctor);
+        }
+
+        public async Task<bool> CheckPrescriptionId(int idPrescription)
+        {
+            return await _dbContext.Prescriptions.AnyAsync(e => e.IdPrescription == idPrescription);
         }
 
         public async Task<IEnumerable<object>> GetDoctor()
@@ -52,14 +57,48 @@ namespace CW8.Services
                 .Select(d => new DoctorDto { FirstName = d.FirstName, LastName = d.LastName, Email = d.Email }).FirstOrDefaultAsync();
         }
 
-        public async Task ModifyDoctor(int idDoctor,DoctorDto doctor)
+        public async Task<PrescriptionDetailsDto> GetPrecriptionDetails(int idPrescription)
         {
-            if(!await CheckDoctorId(idDoctor))
+            return await _dbContext.Prescriptions
+                .Include(e => e.Doctor)
+                .Include(e => e.Patient)
+                .Include(e => e.PrescriptionMedicaments)
+                .Where(e => e.IdPrescription == idPrescription)
+                .Select(e => new PrescriptionDetailsDto
+                {
+                    Date = e.Date.ToString("D"),
+                    DueDate = e.DueDate.ToString("D"),
+                    Doctor = new DoctorDto { FirstName = e.Doctor.FirstName, LastName = e.Doctor.LastName, Email = e.Doctor.Email },
+                    Patient = new PatientDto { FirstName = e.Patient.FirstName, LastName = e.Patient.LastName, BirthDate = e.Patient.BirthDate.ToString("D") },
+                    PrescriptionMedicaments =
+                    e.PrescriptionMedicaments
+                    .Select(e => new PrescriptionMedicamentDto
+                    {
+
+                        MedicamentName = e.Medicament.Name,
+                        Dose = e.Dose,
+                        TypeMedicament = e.Medicament.Type,
+                        Details = e.Details
+
+
+                    }
+
+
+                    ).ToList()
+
+                }).FirstOrDefaultAsync();
+
+
+        }
+
+        public async Task ModifyDoctor(int idDoctor, DoctorDto doctor)
+        {
+            if (!await CheckDoctorId(idDoctor))
             {
                 throw new System.Exception($"Wrong id {idDoctor} for Doctor to update");
             }
 
-            var  doctorToUpdate = await _dbContext.Doctors.FindAsync(idDoctor);
+            var doctorToUpdate = await _dbContext.Doctors.FindAsync(idDoctor);
 
             doctorToUpdate.FirstName = doctor.FirstName;
             doctorToUpdate.LastName = doctor.LastName;

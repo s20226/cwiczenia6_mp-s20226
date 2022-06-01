@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CW8.Models.DTO
+﻿namespace CW8.Models.DTO
 {
     public class PrescriptionMedicamentDto
     {
+
+
+        public string MedicamentName { get; set; }
+        public string TypeMedicament { get; set; }
         public int? Dose { get; set; }
         public string Details { get; set; }
 
 
-        public PrescriptionDto Prescription { get; set; }
-        public MedicamentDto Medicament { get; set; }
+        // public PrescriptionDto Prescription { get; set; }
+        //  public MedicamentDto Medicament { get; set; }
     }
 }

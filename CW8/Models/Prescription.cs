@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CW8.Models
 {
@@ -12,7 +11,7 @@ namespace CW8.Models
         public int IdPatient { get; set; }
         public int IdDoctor { get; set; }
 
-   
+
         public virtual Patient Patient { get; set; }
 
         public virtual Doctor Doctor { get; set; }

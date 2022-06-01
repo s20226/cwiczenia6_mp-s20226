@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CW8.Models;
-using CW8.Services;
+﻿using CW8.Models;
 using CW8.Models.DTO;
+using CW8.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CW8.Controllers
 {
@@ -44,7 +40,7 @@ namespace CW8.Controllers
             return Ok(doctor);
         }
 
- 
+
         [HttpPut("{idDoctor}")]
         public async Task<IActionResult> PutDoctor(int idDoctor, DoctorDto doctor)
         {
@@ -67,10 +63,10 @@ namespace CW8.Controllers
         {
             await _dbService.AddDoctor(doctor);
 
-            return Created("Doctor Created",doctor);
+            return Created("Doctor Created", doctor);
         }
 
- 
+
         [HttpDelete("{idDoctor}")]
         public async Task<IActionResult> DeleteDoctor(int idDoctor)
         {

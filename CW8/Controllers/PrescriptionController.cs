@@ -1,10 +1,8 @@
 ﻿using CW8.Models;
+using CW8.Models.DTO;
 using CW8.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CW8.Controllers
@@ -20,11 +18,14 @@ namespace CW8.Controllers
         }
 
         [HttpGet("{idPrescription}")]
-        public async Task<ActionResult<IEnumerable<Doctor>>> GetPrescription(int idPrescription)
+        public async Task<ActionResult<IEnumerable<Doctor>>> GetPrescriptionDetails(int idPrescription)
         {
-            
 
-            return Ok("OK");
+            if (!await _dbService.CheckPrescriptionId(idPrescription))
+            { return NotFound($"Not Found prescription with id: {idPrescription}"); }
+            PrescriptionDetailsDto prescriptionDetailsDto = await _dbService.GetPrecriptionDetails(idPrescription);
+
+            return Ok(prescriptionDetailsDto);
         }
 
     }
