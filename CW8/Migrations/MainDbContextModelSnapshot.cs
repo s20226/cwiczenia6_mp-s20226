@@ -44,6 +44,22 @@ namespace CW8.Migrations
                     b.HasKey("IdDoctor");
 
                     b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            IdDoctor = 1,
+                            Email = "example@ex.com",
+                            FirstName = "Julian",
+                            LastName = "Bradford"
+                        },
+                        new
+                        {
+                            IdDoctor = 2,
+                            Email = "example@ex.com",
+                            FirstName = "Magdalena",
+                            LastName = "Karpinska"
+                        });
                 });
 
             modelBuilder.Entity("CW8.Models.Medicament", b =>
@@ -71,6 +87,22 @@ namespace CW8.Migrations
                     b.HasKey("IdMedicament");
 
                     b.ToTable("Medicaments");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMedicament = 1,
+                            Description = "Lek na uspokojenie",
+                            Name = "Xanax",
+                            Type = "tabletki"
+                        },
+                        new
+                        {
+                            IdMedicament = 2,
+                            Description = "Lek przeciwbolowy",
+                            Name = "Tramadol",
+                            Type = "tabletki"
+                        });
                 });
 
             modelBuilder.Entity("CW8.Models.Patient", b =>
@@ -96,6 +128,22 @@ namespace CW8.Migrations
                     b.HasKey("IdPatient");
 
                     b.ToTable("Patients");
+
+                    b.HasData(
+                        new
+                        {
+                            IdPatient = 1,
+                            BirthDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Mati",
+                            LastName = "Kowalski"
+                        },
+                        new
+                        {
+                            IdPatient = 2,
+                            BirthDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Jan",
+                            LastName = "Kowalski"
+                        });
                 });
 
             modelBuilder.Entity("CW8.Models.Prescription", b =>
@@ -124,6 +172,24 @@ namespace CW8.Migrations
                     b.HasIndex("IdPatient");
 
                     b.ToTable("Prescriptions");
+
+                    b.HasData(
+                        new
+                        {
+                            IdPrescription = 1,
+                            Date = new DateTime(2022, 6, 1, 0, 11, 16, 518, DateTimeKind.Local).AddTicks(4693),
+                            DueDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdDoctor = 1,
+                            IdPatient = 1
+                        },
+                        new
+                        {
+                            IdPrescription = 2,
+                            Date = new DateTime(2022, 6, 1, 0, 11, 16, 520, DateTimeKind.Local).AddTicks(8671),
+                            DueDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdDoctor = 2,
+                            IdPatient = 1
+                        });
                 });
 
             modelBuilder.Entity("CW8.Models.PrescriptionMedicament", b =>
@@ -139,7 +205,7 @@ namespace CW8.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Dose")
+                    b.Property<int?>("Dose")
                         .HasColumnType("int");
 
                     b.HasKey("IdMedicament", "IdPrescription");
@@ -147,6 +213,22 @@ namespace CW8.Migrations
                     b.HasIndex("IdPrescription");
 
                     b.ToTable("PrescriptionMedicament");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMedicament = 1,
+                            IdPrescription = 1,
+                            Details = "2x1 wieczorem",
+                            Dose = 2
+                        },
+                        new
+                        {
+                            IdMedicament = 2,
+                            IdPrescription = 2,
+                            Details = "2x1 wieczorem",
+                            Dose = 2
+                        });
                 });
 
             modelBuilder.Entity("CW8.Models.Prescription", b =>
